@@ -25,11 +25,17 @@ struct student ** topKStudents(struct student *students, int len, int K)
 {
 	if (K <= 0)    //if k is negative or zero return null
 		return NULL;
-	struct student *Students = 0; //declaring another struct
-	struct student **Students1 = &Students;
-	struct student **students2 = &students;
-	if (K > len || K == 1)
-		return students2;//if k is greater than len or equal to 1 return students
+	struct student *Students=0 ; //declaring another struct
+	struct student **temp = (struct student**)malloc(len*sizeof(struct student));
+	struct student **temp1 = (struct student**)malloc((K)*sizeof(struct student));
+
+	for (int i = 0; i<len; i++)
+	{
+		temp[i] = &students[i];
+	}
+
+	if (K > len )
+		return temp;//if k is greater than len or equal to 1 return students
 	int index = 0, index1 = 0;
 	//arranging the stuct students in descending order
 	for (index = 0; index < len; index++)
@@ -44,16 +50,22 @@ struct student ** topKStudents(struct student *students, int len, int K)
 			}
 		}
 	}
-
+	if (K == 1)
+		return temp;
+	
 	//if K is greatr than length then assigning the top k values to another sturcture and returning it
-	if (K > 1 && K <= len)
+	if (K > 1 || K < len)
 	{
+		for (index = 0; index < K; index++)
 		{
-			for (index = 0, index1 = 0; index < K - 1; index++, index1++)
-			{
-				Students[index1] = students[index];
-			}
+			students[index] = students[index];
 		}
-		return Students1;
+			
 	}
+			for (int i = 0; i<K; i++)
+			{
+				temp1[i] = &Students[i];
+			}
+	return temp;
+	
 }
